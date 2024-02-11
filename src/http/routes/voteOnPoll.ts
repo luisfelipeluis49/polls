@@ -18,8 +18,7 @@ export async function voteOnPoll(app: FastifyInstance) {
 
         let { sessionId } = request.cookies
 
-        if (sessionId) {
-        } else {
+        if (!sessionId) {
             sessionId = randomUUID()
 
             response.setCookie('sessionId', sessionId, {
@@ -28,7 +27,6 @@ export async function voteOnPoll(app: FastifyInstance) {
                 signed: true,
                 httpOnly: true
             })
-
         }
 
         await prisma.vote.create({
